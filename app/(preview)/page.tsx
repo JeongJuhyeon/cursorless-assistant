@@ -9,8 +9,8 @@ import {
 } from "@/components/icons";
 import { useChat } from "ai/react";
 import { DragEvent, useEffect, useRef, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
 import { toast } from "sonner";
+import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
 import { Markdown } from "@/components/markdown";
 
@@ -46,6 +46,7 @@ export default function Home() {
         toast.error("You've been rate limited, please try again later!"),
     });
 
+  const [apiKey, setApiKey] = useState("");
   const [files, setFiles] = useState<FileList | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null); // Reference for the hidden file input
@@ -145,7 +146,7 @@ export default function Home() {
 
   return (
     <div
-      className="flex flex-row justify-center pb-20 h-dvh bg-white dark:bg-zinc-900"
+      className="flex flex-col items-center pb-20 h-dvh bg-white dark:bg-zinc-900"
       onDragOver={handleDragOver}
       onDragLeave={handleDragLeave}
       onDrop={handleDrop}
@@ -166,7 +167,39 @@ export default function Home() {
         )}
       </AnimatePresence>
 
-      <div className="flex flex-col justify-between gap-4">
+      <div className="flex flex-col justify-between gap-4 w-full items-center">
+        <div className="w-full md:w-[500px] px-4 md:px-0 flex flex-row gap-2 items-center pt-4">
+          <div className="flex-grow">
+            <input
+              type="password"
+              placeholder="Enter your Google AI Studio API key"
+              value={apiKey}
+              onChange={(e) => setApiKey(e.target.value)}
+              className="w-full px-3 py-2 border rounded-md dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-300"
+            />
+          </div>
+          <a
+            href="https://aistudio.google.com/app/apikey"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="p-2 text-zinc-500 hover:text-zinc-700 dark:text-zinc-400 dark:hover:text-zinc-200"
+            title="Get API Key"
+          >
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+              <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+            </svg>
+          </a>
+        </div>
         {messages.length > 0 ? (
           <div className="flex flex-col gap-2 h-full w-dvw items-center overflow-y-scroll">
             {messages.map((message, index) => (
@@ -250,11 +283,17 @@ export default function Home() {
           </motion.div>
         )}
 
+        {!apiKey && (
+          <div className="text-sm text-red-500 dark:text-red-400 text-center mb-2">
+            Please enter your Google AI Studio API key to start chatting
+          </div>
+        )}
         <form
           className="flex flex-col gap-2 relative items-center"
           onSubmit={(event) => {
+            const apiKeyOptions = { body: { apiKey } };
             const options = files ? { experimental_attachments: files } : {};
-            handleSubmit(event, options);
+            handleSubmit(event, {...apiKeyOptions, ...options});
             setFiles(null);
           }}
         >
@@ -309,12 +348,13 @@ export default function Home() {
             onChange={handleFileChange}
           />
 
-          <div className="flex items-center w-full md:max-w-[500px] max-w-[calc(100dvw-32px)] bg-zinc-100 dark:bg-zinc-700 rounded-full px-4 py-2">
+          <div className="flex items-center w-[calc(100vw-32px)] md:w-[500px] bg-zinc-100 dark:bg-zinc-700 rounded-full px-4 py-2">
             {/* Upload Button */}
             <button
               type="button"
               onClick={handleUploadClick}
-              className="text-zinc-500 dark:text-zinc-300 hover:text-zinc-700 dark:hover:text-zinc-100 focus:outline-none mr-3"
+              disabled={!apiKey}
+              className="text-zinc-500 dark:text-zinc-300 hover:text-zinc-700 dark:hover:text-zinc-100 focus:outline-none mr-3 disabled:opacity-50"
               aria-label="Upload Files"
             >
               <span className="w-5 h-5">
@@ -325,7 +365,8 @@ export default function Home() {
             {/* Message Input */}
             <input
               ref={inputRef}
-              className="bg-transparent flex-grow outline-none text-zinc-800 dark:text-zinc-300 placeholder-zinc-400"
+              disabled={!apiKey}
+              className="bg-transparent flex-grow outline-none text-zinc-800 dark:text-zinc-300 placeholder-zinc-400 disabled:opacity-50"
               placeholder="Send a message..."
               value={input}
               onChange={handleInputChange}
