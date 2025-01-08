@@ -1,14 +1,15 @@
-import { openai } from "@ai-sdk/openai";
+import { createGoogleGenerativeAI as createGoogleStudio } from "@ai-sdk/google";
 import { convertToCoreMessages, streamText } from "ai";
+import { prompt } from "./prompt";
 
 export async function POST(req: Request) {
-  const { messages } = await req.json();
+  const { messages: userMessages, apiKey } = await req.json();
+  const coreMessages = convertToCoreMessages(userMessages);
+  const messages = prompt.format(coreMessages);
 
   const result = await streamText({
-    model: openai("gpt-4o"),
-    system:
-      "do not respond on markdown or lists, keep your responses brief, you can ask the user to upload images or documents if it could help you understand the problem better",
-    messages: convertToCoreMessages(messages),
+    model: createGoogleStudio({ apiKey })('gemini-2.0-flash-exp'),
+    messages,
   });
 
   return result.toDataStreamResponse();

@@ -257,17 +257,17 @@ export default function Home() {
           <motion.div className="h-[350px] px-4 w-full md:w-[500px] md:px-0 pt-20">
             <div className="border rounded-lg p-6 flex flex-col gap-4 text-zinc-500 text-sm dark:text-zinc-400 dark:border-zinc-700">
               <p className="flex flex-row justify-center gap-4 items-center text-zinc-900 dark:text-zinc-50">
-                <VercelIcon />
+                {/* <VercelIcon />
                 <span>+</span>
-                <AttachmentIcon />
+                <AttachmentIcon /> */}
               </p>
               <p>
-                The useChat hook supports sending attachments along with
-                messages as well as rendering previews on the client. This can
-                be useful for building applications that involve sending images,
-                files, and other media content to the AI provider.
+              Example question:
               </p>
               <p>
+              {`Is it possible to "add" to selection? If I already have a token selected, and then also want to select another token, but without having to say that in a single command ("take air and bat")?`}
+              </p>
+              {/* <p>
                 {" "}
                 Learn more about the{" "}
                 <Link
@@ -278,7 +278,7 @@ export default function Home() {
                   useChat{" "}
                 </Link>
                 hook from Vercel AI SDK.
-              </p>
+              </p> */}
             </div>
           </motion.div>
         )}
@@ -367,7 +367,7 @@ export default function Home() {
               ref={inputRef}
               disabled={!apiKey}
               className="bg-transparent flex-grow outline-none text-zinc-800 dark:text-zinc-300 placeholder-zinc-400 disabled:opacity-50"
-              placeholder="Send a message..."
+              placeholder="Ask for a command..."
               value={input}
               onChange={handleInputChange}
               onPaste={handlePaste}

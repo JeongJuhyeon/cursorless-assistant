@@ -3,9 +3,9 @@ import { Metadata } from "next";
 import { Toaster } from "sonner";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://ai-sdk-preview-attachments.vercel.dev"),
-  title: "Attachments Preview",
-  description: "Experimental preview of attachments in useChat hook",
+  metadataBase: new URL("https://cursorless-command-helper.vercel.dev"),
+  title: "Cursorless Command Helper",
+  description: "Experimental preview of Cursorless command helper",
 };
 
 export default function RootLayout({
