@@ -2,9 +2,9 @@
 
 ## Usage
 
-You'll need a Google AI Studio API key. We're using this instead of OpenAI or Anthropic because unlike those it has a free model that is more than sufficient, so there is no need to set up billing.
-You can get one here: https://aistudio.google.com/app/apikey
-If you run it locally you're free to experiment with different models. In my experience, Gemini 2.0 Flash Experimental works great, so anything better than that should work too, though I haven't tried.
+You'll need a Google AI Studio API key. We're using this instead of OpenAI or Anthropic because unlike those it has a free model that is more than sufficient, so there is no need to set up billing.  
+You can get one [here](https://aistudio.google.com/app/apikey).  
+If you run it locally you can easily experiment with using a different model. In my experience, Gemini 2.0 Flash Experimental works great, so anything better than that should work too, though I haven't tried.
 
 ### Web UI
 
