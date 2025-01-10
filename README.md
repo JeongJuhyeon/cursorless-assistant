@@ -1,5 +1,7 @@
 # Cursorless Command Helper
 
+Get the right command to do something in [Cursorless](https://github.com/cursorless-dev/cursorless).
+
 <img width="598" alt="image" src="https://github.com/user-attachments/assets/18fedf07-125d-48fb-b2c5-8f3275109354" />
 
 ## Usage
